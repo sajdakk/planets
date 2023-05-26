@@ -72,18 +72,25 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
     }
 
     return Expanded(
-      child: ListView.builder(
+      child: ListView.separated(
         controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext _, int index) => _activitiesCardBuilder(index, context),
         itemCount: _availableActivities.length,
+        separatorBuilder: (BuildContext _, int __) => const Divider(
+          color: Colors.deepPurple,
+          height: 1.0,
+        ),
       ),
     );
   }
 
   Widget _activitiesCardBuilder(int index, BuildContext context) {
     final Activities activities = _availableActivities[index];
-    return GestureDetector(
+
+    return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor:  Colors.purple.withOpacity(0.2),
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -92,35 +99,33 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
           ),
         ),
       ),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  ActivitiesCubit cubit = context.read();
-
-                  if (widget.state.favouritesIds.contains(activities.id)) {
-                    cubit.removeActivities(activities.id);
-
-                    return;
-                  }
-
-                  cubit.addActivities(activities.id);
-                },
-                icon: widget.state.favouritesIds.contains(activities.id)
-                    ? const Icon(Icons.favorite_rounded)
-                    : const Icon(Icons.favorite_outline_rounded),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                ActivitiesCubit cubit = context.read();
+    
+                if (widget.state.favouritesIds.contains(activities.id)) {
+                  cubit.removeActivities(activities.id);
+    
+                  return;
+                }
+    
+                cubit.addActivities(activities.id);
+              },
+              icon: widget.state.favouritesIds.contains(activities.id)
+                  ? const Icon(Icons.favorite_rounded)
+                  : const Icon(Icons.favorite_outline_rounded),
+            ),
+            Expanded(
+              child: Text(
+                activities.displayName,
+                overflow: TextOverflow.ellipsis,
               ),
-              Expanded(
-                child: Text(
-                  activities.displayName,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
