@@ -1,9 +1,10 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/screens/feed/feed_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:softnauts/screens/feed/feed_screen.dart';
+import 'package:softnauts/screens/exoplanets/exoplanets_screen.dart';
+
+import 'screens/activities/activities_screen.dart';
 
 void main() {
   setupAppLocator();
@@ -22,27 +23,47 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: InitScreen(),
+      home: const InitScreen(),
       builder: BotToastInit(),
     );
   }
 }
 
-class InitScreen extends StatelessWidget {
+class InitScreen extends StatefulWidget {
   const InitScreen({super.key});
+
+  @override
+  State<InitScreen> createState() => _InitScreenState();
+}
+
+class _InitScreenState extends State<InitScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('SoftNauts'),
+        title: const Text('SoftNauts'),
       ),
-      body: const DefaultTabController(
+      body: DefaultTabController(
         length: 2,
         child: Column(
           children: <Widget>[
-            TabBar(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextFormField(
+                controller: _searchController,
+              ),
+            ),
+            const TabBar(
               labelColor: Colors.deepPurple,
               unselectedLabelColor: Colors.grey,
               indicatorColor: Colors.purpleAccent,
@@ -62,10 +83,10 @@ class InitScreen extends StatelessWidget {
             ),
             Expanded(
               child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  FeedScreen(),
-                  FeedScreen(),
+                  ExoplanetsScreen(searchController: _searchController),
+                  ActivitiesScreen(searchController: _searchController),
                 ],
               ),
             ),
