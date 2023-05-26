@@ -74,7 +74,7 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
     return Expanded(
       child: ListView.builder(
         controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext _, int index) => _activitiesCardBuilder(index, context),
         itemCount: _availableActivities.length,
       ),

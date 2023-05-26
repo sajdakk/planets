@@ -34,9 +34,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
     await _exoplanetsDataManager.fetchData();
 
     _subscription = _exoplanetsDataManager.data$.listen((List<Exoplanets> exoplanetsList) {
-      emit(ExoplanetsLoadedState(
-        exoplanetsList: exoplanetsList,
-      ));
+      _filtrData();
     });
   }
 
@@ -55,17 +53,17 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
       return;
     }
 
-    List<Exoplanets> availableActivities = _exoplanetsDataManager.lastKnownValues;
-    List<Exoplanets> filteredActivities = <Exoplanets>[];
+    List<Exoplanets> availableExoplanets = _exoplanetsDataManager.lastKnownValues;
+    List<Exoplanets> filteredExoplanets = <Exoplanets>[];
 
-    for (Exoplanets exoplanets in availableActivities) {
+    for (Exoplanets exoplanets in availableExoplanets) {
       if (exoplanets.name.contains(searchedText)) {
-        filteredActivities.add(exoplanets);
+        filteredExoplanets.add(exoplanets);
       }
     }
 
     emit(ExoplanetsLoadedState(
-      exoplanetsList: filteredActivities,
+      exoplanetsList: filteredExoplanets,
     ));
   }
 }
