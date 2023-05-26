@@ -1,15 +1,14 @@
-// import 'package:fimber/fimber.dart';
 import 'package:dio/dio.dart';
 import 'package:softnauts/models/exoplanets/exoplanets.dart';
 
 class ExoplanetsDataProvider {
-  bool _morePostsAvailable = true;
+  bool _moreExoplanetsAvailable = true;
   int pageNumber = 1;
 
   final dio = Dio();
 
   Future<List<Exoplanets>> fetch() async {
-    _morePostsAvailable = true;
+    _moreExoplanetsAvailable = true;
 
     final firstPart = await dio.get('https://api.arcsecond.io/exoplanets/?page_size=20&page=$pageNumber&format=json');
 
@@ -31,7 +30,7 @@ class ExoplanetsDataProvider {
   }
 
   Future<List<Exoplanets>> getMoreExoplanets() async {
-    if (_morePostsAvailable == false) {
+    if (_moreExoplanetsAvailable == false) {
       return <Exoplanets>[];
     }
 
@@ -45,7 +44,7 @@ class ExoplanetsDataProvider {
       Map<String, dynamic> results = next.data;
 
       if (results['results'].length < 20) {
-        _morePostsAvailable = false;
+        _moreExoplanetsAvailable = false;
       }
 
       for (Map<String, dynamic> item in results['results']) {
