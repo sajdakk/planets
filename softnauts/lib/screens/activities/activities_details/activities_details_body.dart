@@ -54,22 +54,23 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {
-                    ActivitiesDetailsCubit cubit = context.read();
-
-                    if (widget.state.isActivitiesInFavourites) {
-                      cubit.removeActivities(widget.state.activities.id);
-
-                      return;
-                    }
-
-                    cubit.addActivities(widget.state.activities.id);
-                  },
+                  onPressed: () => _onHeartPress(context),
                   icon: widget.state.isActivitiesInFavourites
-                      ? const Icon(Icons.favorite_rounded)
-                      : const Icon(Icons.favorite_outline_rounded),
+                      ? const Icon(
+                          Icons.favorite_rounded,
+                          color: Colors.purple,
+                        )
+                      : const Icon(
+                          Icons.favorite_outline_rounded,
+                          color: SnColors.textColor,
+                        ),
                 ),
-                const Text('favourite'),
+                Text(
+                  'favourite',
+                  style: SnTextStyles.dMSansRegular16.copyWith(
+                    color: Colors.purple,
+                  ),
+                ),
               ],
             ),
           ],
@@ -81,7 +82,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
   Widget _buildIdInfo() {
     return Column(
       children: [
-        Text('ID: ${widget.state.activities.id}'),
+        Text(
+          'ID: ${widget.state.activities.id}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -94,7 +100,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('creation date: ${widget.state.activities.creationDate!.readable()}'),
+        Text(
+          'creation date: ${widget.state.activities.creationDate!.readable()}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -107,7 +118,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('date: ${widget.state.activities.date!.readable()}'),
+        Text(
+          'date: ${widget.state.activities.date!.readable()}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -120,7 +136,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('title: ${widget.state.activities.title}'),
+        Text(
+          'title: ${widget.state.activities.title}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -133,7 +154,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('content: ${widget.state.activities.content}'),
+        Text(
+          'content: ${widget.state.activities.content}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -146,7 +172,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('label: ${widget.state.activities.label}'),
+        Text(
+          'label: ${widget.state.activities.label}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -159,7 +190,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('profile: ${widget.state.activities.profile}'),
+        Text(
+          'profile: ${widget.state.activities.profile}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -172,7 +208,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('observing site: ${widget.state.activities.observingSite}'),
+        Text(
+          'observing site: ${widget.state.activities.observingSite}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -185,7 +226,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('telescope: ${widget.state.activities.telescope}'),
+        Text(
+          'telescope: ${widget.state.activities.telescope}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -198,7 +244,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('instrument: ${widget.state.activities.instrument}'),
+        Text(
+          'instrument: ${widget.state.activities.instrument}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -211,7 +262,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('programme: ${widget.state.activities.programme}'),
+        Text(
+          'programme: ${widget.state.activities.programme}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -224,7 +280,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('programmeType: ${widget.state.activities.programmeType}'),
+        Text(
+          'programmeType: ${widget.state.activities.programmeType}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -237,7 +298,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('targetName: ${widget.state.activities.targetName}'),
+        Text(
+          'targetName: ${widget.state.activities.targetName}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -250,7 +316,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('coordinates: ${widget.state.activities.coordinates}'),
+        Text(
+          'coordinates: ${widget.state.activities.coordinates}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -263,7 +334,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('organisation: ${widget.state.activities.organisation}'),
+        Text(
+          'organisation: ${widget.state.activities.organisation}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -276,7 +352,12 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('collaboration: ${widget.state.activities.collaboration}'),
+        Text(
+          'collaboration: ${widget.state.activities.collaboration}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
@@ -289,11 +370,26 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
 
     return Column(
       children: [
-        Text('links: ${widget.state.activities.links.join(', ')}'),
+        Text(
+          'links: ${widget.state.activities.links.join(', ')}',
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
         const SizedBox(height: 16.0),
       ],
     );
   }
-}
 
-  // final List<String> links;
+  void _onHeartPress(BuildContext context) {
+    ActivitiesDetailsCubit cubit = context.read();
+
+    if (widget.state.isActivitiesInFavourites) {
+      cubit.removeActivities(widget.state.activities.id);
+
+      return;
+    }
+
+    cubit.addActivities(widget.state.activities.id);
+  }
+}

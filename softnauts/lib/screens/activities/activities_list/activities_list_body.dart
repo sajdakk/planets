@@ -43,24 +43,19 @@ class AactivitiesBodyState extends State<ActivitiesListBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        NotificationListener<UserScrollNotification>(
-          onNotification: (UserScrollNotification notification) {
-            final ScrollDirection direction = notification.direction;
-            setState(() {
-              if (direction == ScrollDirection.reverse) {
-                _scrollDown = true;
-              } else if (direction == ScrollDirection.forward) {
-                _scrollDown = false;
-              }
-            });
-            return true;
-          },
-          child: _buildList(context),
-        ),
-      ],
+    return NotificationListener<UserScrollNotification>(
+      onNotification: (UserScrollNotification notification) {
+        final ScrollDirection direction = notification.direction;
+        setState(() {
+          if (direction == ScrollDirection.reverse) {
+            _scrollDown = true;
+          } else if (direction == ScrollDirection.forward) {
+            _scrollDown = false;
+          }
+        });
+        return true;
+      },
+      child: _buildList(context),
     );
   }
 
@@ -71,16 +66,14 @@ class AactivitiesBodyState extends State<ActivitiesListBody> {
       return const SizedBox();
     }
 
-    return Expanded(
-      child: ListView.separated(
-        controller: _scrollController,
-        physics: const AlwaysScrollableScrollPhysics(),
-        itemBuilder: (BuildContext _, int index) => _activitiesCardBuilder(index, context),
-        itemCount: _availableActivities.length,
-        separatorBuilder: (BuildContext _, int __) => const Divider(
-          color: Colors.deepPurple,
-          height: 1.0,
-        ),
+    return ListView.separated(
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemBuilder: (BuildContext _, int index) => _activitiesCardBuilder(index, context),
+      itemCount: _availableActivities.length,
+      separatorBuilder: (BuildContext _, int __) => const Divider(
+        color: Colors.deepPurple,
+        height: 1.0,
       ),
     );
   }
@@ -90,7 +83,7 @@ class AactivitiesBodyState extends State<ActivitiesListBody> {
 
     return InkWell(
       highlightColor: Colors.transparent,
-      splashColor:  Colors.purple.withOpacity(0.2),
+      splashColor: Colors.purple.withOpacity(0.2),
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -104,31 +97,42 @@ class AactivitiesBodyState extends State<ActivitiesListBody> {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {
-                ActivitiesListCubit cubit = context.read();
-    
-                if (widget.state.favouritesIds.contains(activities.id)) {
-                  cubit.removeActivities(activities.id);
-    
-                  return;
-                }
-    
-                cubit.addActivities(activities.id);
-              },
+              onPressed: () => _onHeartPress(context, activities.id),
               icon: widget.state.favouritesIds.contains(activities.id)
-                  ? const Icon(Icons.favorite_rounded)
-                  : const Icon(Icons.favorite_outline_rounded),
+                  ? const Icon(
+                      Icons.favorite_rounded,
+                      color: Colors.purple,
+                    )
+                  : const Icon(
+                      Icons.favorite_outline_rounded,
+                      color: SnColors.textColor,
+                    ),
             ),
             Expanded(
               child: Text(
                 activities.displayName,
                 overflow: TextOverflow.ellipsis,
+                style: SnTextStyles.dMSansSmall14.copyWith(
+                  color: SnColors.textColor,
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onHeartPress(BuildContext context, int id) {
+    ActivitiesListCubit cubit = context.read();
+
+    if (widget.state.favouritesIds.contains(id)) {
+      cubit.removeActivities(id);
+
+      return;
+    }
+
+    cubit.addActivities(id);
   }
 
   Future<void> _onScroll(BuildContext context) async {
@@ -143,7 +147,7 @@ class AactivitiesBodyState extends State<ActivitiesListBody> {
       await Future.wait<void>(
         <Future<void>>[
           cubit.getMoreActivities(),
-          Future<dynamic>.delayed(const Duration(milliseconds: 100), () {}),
+          Future<dynamic>.delayed(const Duration(milliseconds: 50), () {}),
         ],
       );
 

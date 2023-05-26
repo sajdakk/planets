@@ -19,16 +19,16 @@ class ExoplanetsBody extends StatefulWidget {
 }
 
 class EexoplanetsBodyState extends State<ExoplanetsBody> {
-  late List<Exoplanets> _availablePosts = widget.state.exoplanetsList;
+  late List<Exoplanets> _availableExoplanets = widget.state.exoplanetsList;
   final ScrollController _scrollController = ScrollController();
 
-  bool _gettingMoreProducts = false;
+  bool _gettingMoreItems = false;
   bool _scrollDown = false;
 
   @override
   void didUpdateWidget(covariant ExoplanetsBody oldWidget) {
     if (oldWidget.state.exoplanetsList != widget.state.exoplanetsList) {
-      _availablePosts = widget.state.exoplanetsList.toList();
+      _availableExoplanets = widget.state.exoplanetsList.toList();
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -42,61 +42,49 @@ class EexoplanetsBodyState extends State<ExoplanetsBody> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildBody();
-  }
-
-  Widget _buildBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        NotificationListener<UserScrollNotification>(
-          onNotification: (UserScrollNotification notification) {
-            final ScrollDirection direction = notification.direction;
-            setState(() {
-              if (direction == ScrollDirection.reverse) {
-                _scrollDown = true;
-              } else if (direction == ScrollDirection.forward) {
-                _scrollDown = false;
-              }
-            });
-            return true;
-          },
-          child: Expanded(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: <Widget>[
-                  _buildList(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+    return NotificationListener<UserScrollNotification>(
+      onNotification: (UserScrollNotification notification) {
+        final ScrollDirection direction = notification.direction;
+        setState(() {
+          if (direction == ScrollDirection.reverse) {
+            _scrollDown = true;
+          } else if (direction == ScrollDirection.forward) {
+            _scrollDown = false;
+          }
+        });
+        return true;
+      },
+      child: _buildList(),
     );
   }
 
   Widget _buildList() {
-    _availablePosts = widget.state.exoplanetsList.toList();
+    _availableExoplanets = widget.state.exoplanetsList.toList();
 
-    if (_availablePosts.isEmpty) {
+    if (_availableExoplanets.isEmpty) {
       return const SizedBox();
     }
 
     return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: _postCardBuilder,
-      itemCount: _availablePosts.length,
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemBuilder: _exoplanetsCardBuilder,
+      itemCount: _availableExoplanets.length,
     );
   }
 
-  Widget _postCardBuilder(BuildContext _, int index) {
-    final Exoplanets post = _availablePosts[index];
+  Widget _exoplanetsCardBuilder(BuildContext _, int index) {
+    final Exoplanets exoplanets = _availableExoplanets[index];
+
     return Card(
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        child: Text(post.name),
+        child: Text(
+          exoplanets.name,
+          style: SnTextStyles.dMSansSmall14.copyWith(
+            color: SnColors.textColor,
+          ),
+        ),
       ),
     );
   }
@@ -105,20 +93,20 @@ class EexoplanetsBodyState extends State<ExoplanetsBody> {
     final double maxScroll = _scrollController.position.maxScrollExtent;
     final double currentScroll = _scrollController.position.pixels;
 
-    if (maxScroll - currentScroll == 0 && !_gettingMoreProducts && _scrollDown) {
+    if (maxScroll - currentScroll == 0 && !_gettingMoreItems && _scrollDown) {
       BotToast.showLoading(backgroundColor: Colors.transparent);
-      _gettingMoreProducts = true;
+      _gettingMoreItems = true;
       final ExoplanetsCubit cubit = context.read();
 
       await Future.wait<void>(
         <Future<void>>[
-          cubit.getMorePosts(),
-          Future<dynamic>.delayed(const Duration(milliseconds: 100), () {}),
+          cubit.getMoreExoplanets(),
+          Future<dynamic>.delayed(const Duration(milliseconds: 50), () {}),
         ],
       );
 
       BotToast.closeAllLoading();
-      _gettingMoreProducts = false;
+      _gettingMoreItems = false;
     }
   }
 }

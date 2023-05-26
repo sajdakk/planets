@@ -26,7 +26,12 @@ class ActivitiesDetailsScreen extends StatelessWidget {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('activities details'),
+                    Text(
+                      'activities details',
+                      style: SnTextStyles.dMSansLarge24.copyWith(
+                        color: SnColors.basicBlack,
+                      ),
+                    ),
                     IconButton(
                       onPressed: () {
                         ActivitiesDetailsCubit cubit = context.read();
@@ -40,8 +45,14 @@ class ActivitiesDetailsScreen extends StatelessWidget {
                         cubit.addActivities(state.activities.id);
                       },
                       icon: state.isActivitiesInFavourites
-                          ? const Icon(Icons.favorite_rounded)
-                          : const Icon(Icons.favorite_outline_rounded),
+                          ? const Icon(
+                              Icons.favorite_rounded,
+                              color: Colors.purple,
+                            )
+                          : const Icon(
+                              Icons.favorite_outline_rounded,
+                              color: SnColors.basicBlack,
+                            ),
                     ),
                   ],
                 ),

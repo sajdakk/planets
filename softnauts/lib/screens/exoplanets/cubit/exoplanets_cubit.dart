@@ -36,7 +36,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
     });
   }
 
-  Future<void> getMorePosts() async {
+  Future<void> getMoreExoplanets() async {
     await _exoplanetsDataManager.getMoreExoplanets();
   }
 
