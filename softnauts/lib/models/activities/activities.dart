@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:softnauts/extensions/_extensions.dart';
 
 import 'activities_fields.dart';
 
@@ -86,6 +87,30 @@ class Activities extends Equatable {
 
   @JsonKey(name: ActivitiesFields.collaboration)
   final String? collaboration;
+
+  String get displayName {
+    String name = '';
+
+    if (targetName.isNotEmpty) {
+      name += '$targetName, ';
+    } else {
+      name += '<empty>, ';
+    }
+
+    if (creationDate != null) {
+      name += '${creationDate!.readable()}, ';
+    } else {
+      name += '<empty>, ';
+    }
+
+    if (date != null) {
+      name += date!.readable();
+    } else {
+      name += '<empty>';
+    }
+
+    return name;
+  }
 
   @override
   List<Object?> get props => <Object?>[

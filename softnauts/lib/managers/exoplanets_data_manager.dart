@@ -15,7 +15,7 @@ class ExoplanetsDataManager  extends DataManager<Exoplanets>  {
 
   Future<bool> getMorePosts() async {
     try {
-      final List<Exoplanets> result = await _exoplanetsDataProvider.getMorePosts();
+      final List<Exoplanets> result = await _exoplanetsDataProvider.getMoreExoplanets();
 
       updateStreamWith(result);
 

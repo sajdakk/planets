@@ -1,10 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:softnauts/core/_core.dart';
+import 'package:softnauts/screens/activities/activities_list/activities_screen.dart';
 import 'package:softnauts/screens/exoplanets/exoplanets_screen.dart';
-
-import 'screens/activities/activities_screen.dart';
 
 void main() {
   setupAppLocator();
