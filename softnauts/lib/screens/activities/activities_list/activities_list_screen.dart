@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/screens/exoplanets/exoplanets_body.dart';
 import 'package:softnauts/softnauts.dart';
 
-import 'cubit/exoplanets_cubit.dart';
+import 'cubit/activities_cubit.dart';
+import 'activities_list_body.dart';
 
-class ExoplanetsScreen extends StatelessWidget {
-  const ExoplanetsScreen({
+class ActivitiesListScreen extends StatelessWidget {
+  const ActivitiesListScreen({
     super.key,
     required this.searchController,
   });
@@ -16,16 +16,16 @@ class ExoplanetsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider<ExoplanetsCubit>(
+      body: BlocProvider<ActivitiesListCubit>(
         create: (_) => sl()..init(searchController),
-        child: BlocBuilder<ExoplanetsCubit, ExoplanetsState>(
-          builder: (BuildContext context, ExoplanetsState state) {
-            if (state is ExoplanetsLoadingState) {
+        child: BlocBuilder<ActivitiesListCubit, ActivitiesListState>(
+          builder: (BuildContext context, ActivitiesListState state) {
+            if (state is ActivitiesListLoadingState) {
               return const LoadingView();
             }
 
-            if (state is ExoplanetsLoadedState) {
-              return ExoplanetsBody(state: state);
+            if (state is ActivitiesListLoadedState) {
+              return ActivitiesListBody(state: state);
             }
 
             return const ErrorView();

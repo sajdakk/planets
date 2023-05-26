@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:softnauts/models/equatorial_coordinates/equatorial_coordinates.dart';
-import 'package:softnauts/models/exoplanets_data/exoplanets_data.dart';
-
-import 'exoplanets_fields.dart';
+import 'package:softnauts/softnauts.dart';
 
 part 'exoplanets.g.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/widgets/_widgets.dart';
+import 'package:softnauts/softnauts.dart';
 
 import 'activities_details_body.dart';
 import 'cubit/activities_details_cubit.dart';
@@ -60,7 +59,7 @@ class ActivitiesDetailsScreen extends StatelessWidget {
             );
           }
 
-          return ErrorView.unhandledState(state);
+          return const ErrorView();
         },
       ),
     );

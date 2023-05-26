@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/screens/activities/activities_list/activities_screen.dart';
+import 'package:softnauts/screens/activities/activities_list/activities_list_screen.dart';
 import 'package:softnauts/screens/exoplanets/exoplanets_screen.dart';
 
 void main() {
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Softnauts',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -49,7 +50,7 @@ class _InitScreenState extends State<InitScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('SoftNauts'),
+        title: const Text('Softnauts'),
       ),
       body: DefaultTabController(
         length: 2,
@@ -84,7 +85,7 @@ class _InitScreenState extends State<InitScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   ExoplanetsScreen(searchController: _searchController),
-                  ActivitiesScreen(searchController: _searchController),
+                  ActivitiesListScreen(searchController: _searchController),
                 ],
               ),
             ),

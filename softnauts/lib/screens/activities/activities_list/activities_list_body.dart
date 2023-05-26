@@ -2,24 +2,24 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/models/activities/activities.dart';
 import 'package:softnauts/screens/activities/activities_details/activities_details_screen.dart';
+import 'package:softnauts/softnauts.dart';
 
 import 'cubit/activities_cubit.dart';
 
-class ActivitiesBody extends StatefulWidget {
-  const ActivitiesBody({
+class ActivitiesListBody extends StatefulWidget {
+  const ActivitiesListBody({
     super.key,
     required this.state,
   });
 
-  final ActivitiesLoadedState state;
+  final ActivitiesListLoadedState state;
 
   @override
-  State<ActivitiesBody> createState() => AactivitiesBodyState();
+  State<ActivitiesListBody> createState() => AactivitiesBodyState();
 }
 
-class AactivitiesBodyState extends State<ActivitiesBody> {
+class AactivitiesBodyState extends State<ActivitiesListBody> {
   late List<Activities> _availableActivities = widget.state.activitiesList;
   final ScrollController _scrollController = ScrollController();
 
@@ -27,7 +27,7 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
   bool _scrollDown = false;
 
   @override
-  void didUpdateWidget(covariant ActivitiesBody oldWidget) {
+  void didUpdateWidget(covariant ActivitiesListBody oldWidget) {
     if (oldWidget.state.activitiesList != widget.state.activitiesList) {
       _availableActivities = widget.state.activitiesList.toList();
     }
@@ -105,7 +105,7 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
           children: [
             IconButton(
               onPressed: () {
-                ActivitiesCubit cubit = context.read();
+                ActivitiesListCubit cubit = context.read();
     
                 if (widget.state.favouritesIds.contains(activities.id)) {
                   cubit.removeActivities(activities.id);
@@ -138,7 +138,7 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
     if (maxScroll - currentScroll == 0 && !_gettingMoreProducts && _scrollDown) {
       BotToast.showLoading(backgroundColor: Colors.transparent);
       _gettingMoreProducts = true;
-      final ActivitiesCubit cubit = context.read();
+      final ActivitiesListCubit cubit = context.read();
 
       await Future.wait<void>(
         <Future<void>>[

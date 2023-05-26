@@ -9,8 +9,6 @@ class FavouritesActivitiesManager {
 
   void addActivities(int id) {
     final Set<int> currentValues = _data.value;
-    currentValues.removeWhere((int value) => id == value);
-
     currentValues.add(id);
 
     _data.add(currentValues);

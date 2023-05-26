@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/managers/exoplanets_data_manager.dart';
-import 'package:softnauts/models/exoplanets/exoplanets.dart';
+import 'package:softnauts/softnauts.dart';
 
 part 'exoplanets_state.dart';
 
@@ -39,7 +37,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
   }
 
   Future<void> getMorePosts() async {
-    await _exoplanetsDataManager.getMorePosts();
+    await _exoplanetsDataManager.getMoreExoplanets();
   }
 
   void _filtrData() {

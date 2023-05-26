@@ -1,9 +1,5 @@
-import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/models/activities/activities.dart';
-import 'package:softnauts/providers/activities_data_provider.dart';
 import 'package:collection/collection.dart';
-
-import 'data_manager.dart';
+import 'package:softnauts/softnauts.dart';
 
 class ActivitiesDataManager extends DataManager<Activities> {
   final ActivitiesDataProvider activitiesDataProvider = sl();

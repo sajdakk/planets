@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'equatorial_coordinates_fields.dart';
+import 'package:softnauts/softnauts.dart';
 
 part 'equatorial_coordinates.g.dart';
 

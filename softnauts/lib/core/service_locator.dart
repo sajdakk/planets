@@ -11,13 +11,16 @@ import 'package:softnauts/screens/exoplanets/cubit/exoplanets_cubit.dart';
 final GetIt sl = GetIt.instance;
 
 void setupAppLocator() {
+  // Cubits.
   sl.registerFactory(() => ExoplanetsCubit());
-  sl.registerFactory(() => ActivitiesCubit());
+  sl.registerFactory(() => ActivitiesListCubit());
   sl.registerFactory(() => ActivitiesDetailsCubit());
 
+  // Providers.
   sl.registerFactory(() => ExoplanetsDataProvider());
   sl.registerFactory(() => ActivitiesDataProvider());
 
+  // Managers.
   sl.registerLazySingleton(() => ExoplanetsDataManager());
   sl.registerLazySingleton(() => ActivitiesDataManager());
   sl.registerLazySingleton(() => FavouritesActivitiesManager());

@@ -1,32 +1,37 @@
 import 'package:dio/dio.dart';
-import 'package:softnauts/models/exoplanets/exoplanets.dart';
+import 'package:softnauts/softnauts.dart';
 
 class ExoplanetsDataProvider {
   bool _moreExoplanetsAvailable = true;
-  int pageNumber = 1;
+  int _pageNumber = 1;
 
-  final dio = Dio();
+  static const int _pageSize = 20;
+
+  final _dio = Dio();
 
   Future<List<Exoplanets>> fetch() async {
-    _moreExoplanetsAvailable = true;
+    final firstPart =
+        await _dio.get('https://api.arcsecond.io/exoplanets/?page_size=$_pageSize&page=$_pageNumber&format=json');
 
-    final firstPart = await dio.get('https://api.arcsecond.io/exoplanets/?page_size=20&page=$pageNumber&format=json');
-
-    if (firstPart.statusCode == 200) {
-      final List<Exoplanets> exoplanetsList = <Exoplanets>[];
-
-      Map<String, dynamic> results = firstPart.data;
-
-      for (Map<String, dynamic> item in results['results']) {
-        final Exoplanets exoplanets = Exoplanets.fromJson(item);
-
-        exoplanetsList.add(exoplanets);
-      }
-
-      return exoplanetsList;
-    } else {
-      throw Exception('Failed to load album');
+    if (firstPart.statusCode != 200) {
+      throw Exception('Failed to load exoplanets');
     }
+
+    final List<Exoplanets> exoplanetsList = <Exoplanets>[];
+
+    Map<String, dynamic> results = firstPart.data;
+
+    if (results['results'].length < _pageSize) {
+      _moreExoplanetsAvailable = false;
+    }
+
+    for (Map<String, dynamic> item in results['results']) {
+      final Exoplanets exoplanets = Exoplanets.fromJson(item);
+
+      exoplanetsList.add(exoplanets);
+    }
+
+    return exoplanetsList;
   }
 
   Future<List<Exoplanets>> getMoreExoplanets() async {
@@ -34,28 +39,29 @@ class ExoplanetsDataProvider {
       return <Exoplanets>[];
     }
 
-    pageNumber++;
+    _pageNumber++;
 
-    final next = await dio.get('https://api.arcsecond.io/exoplanets/?page_size=20&page=$pageNumber&format=json');
+    final next =
+        await _dio.get('https://api.arcsecond.io/exoplanets/?page_size=$_pageSize&page=$_pageNumber&format=json');
 
-    if (next.statusCode == 200) {
-      final List<Exoplanets> exoplanetsList = <Exoplanets>[];
-
-      Map<String, dynamic> results = next.data;
-
-      if (results['results'].length < 20) {
-        _moreExoplanetsAvailable = false;
-      }
-
-      for (Map<String, dynamic> item in results['results']) {
-        final Exoplanets exoplanets = Exoplanets.fromJson(item);
-
-        exoplanetsList.add(exoplanets);
-      }
-
-      return exoplanetsList;
-    } else {
-      throw Exception('Failed to load album');
+    if (next.statusCode != 200) {
+      throw Exception('Failed to load exoplanets');
     }
+
+    final List<Exoplanets> exoplanetsList = <Exoplanets>[];
+
+    Map<String, dynamic> results = next.data;
+
+    if (results['results'].length < _pageSize) {
+      _moreExoplanetsAvailable = false;
+    }
+
+    for (Map<String, dynamic> item in results['results']) {
+      final Exoplanets exoplanets = Exoplanets.fromJson(item);
+
+      exoplanetsList.add(exoplanets);
+    }
+
+    return exoplanetsList;
   }
 }

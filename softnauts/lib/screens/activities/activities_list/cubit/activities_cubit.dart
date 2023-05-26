@@ -4,15 +4,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/managers/activities_data_manager.dart';
-import 'package:softnauts/managers/favourites_data_manager.dart';
-import 'package:softnauts/models/activities/activities.dart';
+import 'package:softnauts/softnauts.dart';
 
 part 'activities_state.dart';
 
-class ActivitiesCubit extends Cubit<ActivitiesState> {
-  ActivitiesCubit() : super(ActivitiesLoadingState());
+class ActivitiesListCubit extends Cubit<ActivitiesListState> {
+  ActivitiesListCubit() : super(ActivitiesListLoadingState());
 
   TextEditingController? _searchController;
 
@@ -56,7 +53,7 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
     String? searchedText = _searchController?.text;
 
     if (searchedText == null || searchedText.isEmpty) {
-      emit(ActivitiesLoadedState(
+      emit(ActivitiesListLoadedState(
         activitiesList: _activitiesDataManager.lastKnownValues,
         favouritesIds: _favouritesActivitiesManager.lastKnownValues,
       ));
@@ -73,18 +70,17 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
       }
     }
 
-    emit(ActivitiesLoadedState(
+    emit(ActivitiesListLoadedState(
       activitiesList: filteredActivities,
       favouritesIds: _favouritesActivitiesManager.lastKnownValues,
     ));
   }
 
-   void addActivities(int id) {
-   _favouritesActivitiesManager.addActivities(id);
+  void addActivities(int id) {
+    _favouritesActivitiesManager.addActivities(id);
   }
 
   void removeActivities(int id) {
-      _favouritesActivitiesManager.removeActivities(id);
-
+    _favouritesActivitiesManager.removeActivities(id);
   }
 }

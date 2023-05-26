@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/extensions/_extensions.dart';
+import 'package:softnauts/softnauts.dart';
 
 import 'cubit/activities_details_cubit.dart';
 

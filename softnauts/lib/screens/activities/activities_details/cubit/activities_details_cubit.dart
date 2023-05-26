@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/managers/activities_data_manager.dart';
-import 'package:softnauts/managers/favourites_data_manager.dart';
-import 'package:softnauts/models/activities/activities.dart';
+import 'package:softnauts/softnauts.dart';
 
 part 'activities_details_state.dart';
 
@@ -44,11 +41,10 @@ class ActivitiesDetailsCubit extends Cubit<ActivitiesDetailsState> {
   }
 
   void addActivities(int id) {
-   _favouritesActivitiesManager.addActivities(id);
+    _favouritesActivitiesManager.addActivities(id);
   }
 
   void removeActivities(int id) {
-      _favouritesActivitiesManager.removeActivities(id);
-
+    _favouritesActivitiesManager.removeActivities(id);
   }
 }
