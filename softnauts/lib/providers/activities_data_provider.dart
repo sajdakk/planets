@@ -1,47 +1,48 @@
 // import 'package:fimber/fimber.dart';
-import 'package:softnauts/models/exoplanets/exoplanets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ExoplanetsDataProvider {
+import 'package:softnauts/models/activities/activities.dart';
+
+class ActivitiesDataProvider {
   bool _morePostsAvailable = true;
   int pageNumber = 1;
 
-  Future<List<Exoplanets>> fetch() async {
+  Future<List<Activities>> fetch() async {
     _morePostsAvailable = true;
 
     final firstPart =
-        await http.get(Uri.parse('https://api.arcsecond.io/exoplanets/?page_size=20&page=$pageNumber&format=json'));
+        await http.get(Uri.parse('https://api.arcsecond.io/activities/?page_size=20&page=$pageNumber&format=json'));
 
     if (firstPart.statusCode == 200) {
-      final List<Exoplanets> exoplanetsList = <Exoplanets>[];
+      final List<Activities> activitiesList = <Activities>[];
 
       Map<String, dynamic> decode = jsonDecode(firstPart.body);
 
       for (Map<String, dynamic> item in decode['results']) {
-        final Exoplanets exoplanets = Exoplanets.fromJson(item);
+        final Activities activities = Activities.fromJson(item);
 
-        exoplanetsList.add(exoplanets);
+        activitiesList.add(activities);
       }
 
-      return exoplanetsList;
+      return activitiesList;
     } else {
       throw Exception('Failed to load album');
     }
   }
 
-  Future<List<Exoplanets>> getMoreExoplanets() async {
+  Future<List<Activities>> getMoreActivities() async {
     if (_morePostsAvailable == false) {
-      return <Exoplanets>[];
+      return <Activities>[];
     }
 
     pageNumber++;
 
     final next =
-        await http.get(Uri.parse('https://api.arcsecond.io/exoplanets/?page_size=20&page=$pageNumber&format=json'));
+        await http.get(Uri.parse('https://api.arcsecond.io/activities/?page_size=20&page=$pageNumber&format=json'));
 
     if (next.statusCode == 200) {
-      final List<Exoplanets> exoplanetsList = <Exoplanets>[];
+      final List<Activities> activitiesList = <Activities>[];
 
       Map<String, dynamic> decode = jsonDecode(next.body);
 
@@ -50,12 +51,12 @@ class ExoplanetsDataProvider {
       }
 
       for (Map<String, dynamic> item in decode['results']) {
-        final Exoplanets exoplanets = Exoplanets.fromJson(item);
+        final Activities activities = Activities.fromJson(item);
 
-        exoplanetsList.add(exoplanets);
+        activitiesList.add(activities);
       }
 
-      return exoplanetsList;
+      return activitiesList;
     } else {
       throw Exception('Failed to load album');
     }
