@@ -77,8 +77,8 @@ class _InitScreenState extends State<InitScreen> {
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  ExoplanetsScreen(searchController: _searchController),
-                  ActivitiesListScreen(searchController: _searchController),
+                  ExoplanetsScreen(searchController: _searchController,),
+                  ActivitiesListScreen(searchController: _searchController,),
                 ],
               ),
             ),

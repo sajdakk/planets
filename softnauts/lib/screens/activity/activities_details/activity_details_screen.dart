@@ -58,12 +58,13 @@ class ActivityDetailsScreen extends StatelessWidget {
                 ),
                 leading: GestureDetector(
                   child: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new_outlined,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
               ),
               body: ActivityBody(state: state),

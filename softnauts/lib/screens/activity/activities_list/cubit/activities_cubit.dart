@@ -21,7 +21,7 @@ class ActivitiesListCubit extends Cubit<ActivitiesListState> {
   @override
   Future<void> close() {
     _subscription?.cancel();
-    _searchController?.removeListener(_filtrData);
+    _searchController?.removeListener(_filterData);
 
     return super.close();
   }
@@ -29,7 +29,7 @@ class ActivitiesListCubit extends Cubit<ActivitiesListState> {
   Future<void> init(TextEditingController searchController) async {
     _searchController = searchController;
 
-    _searchController?.addListener(_filtrData);
+    _searchController?.addListener(_filterData);
 
     await _activityManager.fetchNextActivities();
 
@@ -40,7 +40,7 @@ class ActivitiesListCubit extends Cubit<ActivitiesListState> {
         List<Activity> activitiesList,
         Set<int> favouritesIds,
       ) {
-        _filtrData();
+        _filterData();
       },
     ).listen((_) {});
   }
@@ -49,7 +49,7 @@ class ActivitiesListCubit extends Cubit<ActivitiesListState> {
     await _activityManager.fetchNextActivities();
   }
 
-  void _filtrData() {
+  void _filterData() {
     final String? searchedText = _searchController?.text;
     if (searchedText == null || searchedText.isEmpty) {
       emit(ActivitiesListLoadedState(

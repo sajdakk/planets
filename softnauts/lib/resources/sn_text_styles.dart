@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SnTextStyles {
-  SnTextStyles._();
-
+abstract class SnTextStyles {
   static const TextStyle _dMSans = TextStyle(
     fontFamily: 'DMSans',
   );

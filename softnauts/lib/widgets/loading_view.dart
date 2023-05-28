@@ -6,8 +6,8 @@ class LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const LinearProgressIndicator(
-          value: null,
-          minHeight: 4.0,
-        );
+      value: null,
+      minHeight: 4.0,
+    );
   }
 }

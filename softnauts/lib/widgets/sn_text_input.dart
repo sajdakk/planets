@@ -40,20 +40,26 @@ class SnTextInput extends StatelessWidget {
           color: SnColors.gray,
         ),
         enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(6.0),
+          ),
           borderSide: BorderSide(
             color: SnColors.neutral,
           ),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(6.0),
+          ),
           borderSide: BorderSide(
             color: SnColors.neutral,
             width: 2.0,
           ),
         ),
         border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(6.0),
+          ),
           borderSide: BorderSide(
             color: SnColors.neutral,
           ),

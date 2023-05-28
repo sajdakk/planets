@@ -19,7 +19,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
   @override
   Future<void> close() {
     _subscription?.cancel();
-    _searchController?.removeListener(_filtrData);
+    _searchController?.removeListener(_filterData);
 
     return super.close();
   }
@@ -27,12 +27,12 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
   Future<void> init(TextEditingController searchController) async {
     _searchController = searchController;
 
-    _searchController?.addListener(_filtrData);
+    _searchController?.addListener(_filterData);
 
     await _exoplanetsManager.fetchNextExoplanets();
 
     _subscription = _exoplanetsManager.exoplanets.listen((List<Exoplanet> exoplanetsList) {
-      _filtrData();
+      _filterData();
     });
   }
 
@@ -40,7 +40,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
     await _exoplanetsManager.fetchNextExoplanets();
   }
 
-  void _filtrData() {
+  void _filterData() {
     final String? searchedText = _searchController?.text;
     if (searchedText == null || searchedText.isEmpty) {
       emit(ExoplanetsLoadedState(
