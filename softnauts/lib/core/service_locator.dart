@@ -1,27 +1,30 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:softnauts/managers/activities_data_manager.dart';
-import 'package:softnauts/managers/exoplanets_data_manager.dart';
+import 'package:softnauts/managers/activity_manager.dart';
+import 'package:softnauts/managers/exoplanet_manager.dart';
 import 'package:softnauts/managers/favourites_data_manager.dart';
-import 'package:softnauts/providers/activities_data_provider.dart';
-import 'package:softnauts/providers/exoplanets_data_provider.dart';
-import 'package:softnauts/screens/activities/activities_details/cubit/activities_details_cubit.dart';
-import 'package:softnauts/screens/activities/activities_list/cubit/activities_cubit.dart';
+import 'package:softnauts/screens/activity/activities_details/cubit/activity_details_cubit.dart';
+import 'package:softnauts/screens/activity/activities_list/cubit/activities_cubit.dart';
 import 'package:softnauts/screens/exoplanets/cubit/exoplanets_cubit.dart';
 
 final GetIt sl = GetIt.instance;
 
 void setupAppLocator() {
+  // Managers.
+  sl.registerLazySingleton(
+    () => ExoplanetsDataManager(
+      dio: Dio(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => ActivityManager(
+      dio: Dio(),
+    ),
+  );
+  sl.registerLazySingleton(() => FavouritesActivitiesManager());
+
   // Cubits.
   sl.registerFactory(() => ExoplanetsCubit());
   sl.registerFactory(() => ActivitiesListCubit());
-  sl.registerFactory(() => ActivitiesDetailsCubit());
-
-  // Providers.
-  sl.registerFactory(() => ExoplanetsDataProvider());
-  sl.registerFactory(() => ActivitiesDataProvider());
-
-  // Managers.
-  sl.registerLazySingleton(() => ExoplanetsDataManager());
-  sl.registerLazySingleton(() => ActivitiesDataManager());
-  sl.registerLazySingleton(() => FavouritesActivitiesManager());
+  sl.registerFactory(() => ActivityDetailsCubit());
 }

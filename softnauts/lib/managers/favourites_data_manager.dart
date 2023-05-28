@@ -1,28 +1,37 @@
 import 'package:rxdart/rxdart.dart';
 
 class FavouritesActivitiesManager {
-  final BehaviorSubject<Set<int>> _data = BehaviorSubject<Set<int>>.seeded(<int>{});
+  final BehaviorSubject<Set<int>> _favourites$ = BehaviorSubject<Set<int>>.seeded(<int>{});
 
-  Stream<Set<int>> get data => _data.stream;
+  ValueStream<Set<int>> get favourites {
+    return _favourites$;
+  }
 
-  Set<int> get lastKnownValues => _data.value.toSet();
+  void addActivity(int id) {
+    final Set<int>? currentValues = _favourites$.valueOrNull;
+    if (currentValues == null) {
+      return;
+    }
 
-  void addActivities(int id) {
-    final Set<int> currentValues = _data.value;
     currentValues.add(id);
-
-    _data.add(currentValues);
+    _favourites$.add(currentValues);
   }
 
-  void removeActivities(int id) {
-    final Set<int> currentValues = _data.value;
-    currentValues.removeWhere((int value) => id == value);
+  void removeActivity(int id) {
+    final Set<int>? currentValues = _favourites$.valueOrNull;
+    if (currentValues == null) {
+      return;
+    }
 
-    _data.add(currentValues);
+    currentValues.remove(id);
+    _favourites$.add(currentValues);
   }
 
-  bool isActivitiesInFavourites(int id) {
-    final Set<int> currentValues = _data.value;
+  bool isActivityInFavourites(int id) {
+    final Set<int>? currentValues = _favourites$.valueOrNull;
+    if (currentValues == null) {
+      return false;
+    }
 
     return currentValues.contains(id);
   }

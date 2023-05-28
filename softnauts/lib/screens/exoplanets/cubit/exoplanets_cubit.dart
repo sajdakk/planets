@@ -14,7 +14,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
 
   StreamSubscription<dynamic>? _subscription;
 
-  final ExoplanetsDataManager _exoplanetsDataManager = sl();
+  final ExoplanetsDataManager _exoplanetsManager = sl();
 
   @override
   Future<void> close() {
@@ -29,32 +29,31 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
 
     _searchController?.addListener(_filtrData);
 
-    await _exoplanetsDataManager.fetchData();
+    await _exoplanetsManager.fetchNextExoplanets();
 
-    _subscription = _exoplanetsDataManager.data$.listen((List<Exoplanets> exoplanetsList) {
+    _subscription = _exoplanetsManager.exoplanets.listen((List<Exoplanet> exoplanetsList) {
       _filtrData();
     });
   }
 
   Future<void> getMoreExoplanets() async {
-    await _exoplanetsDataManager.getMoreExoplanets();
+    await _exoplanetsManager.fetchNextExoplanets();
   }
 
   void _filtrData() {
-    String? searchedText = _searchController?.text;
-
+    final String? searchedText = _searchController?.text;
     if (searchedText == null || searchedText.isEmpty) {
       emit(ExoplanetsLoadedState(
-        exoplanetsList: _exoplanetsDataManager.lastKnownValues,
+        exoplanetsList: _exoplanetsManager.exoplanets.value,
       ));
 
       return;
     }
 
-    List<Exoplanets> availableExoplanets = _exoplanetsDataManager.lastKnownValues;
-    List<Exoplanets> filteredExoplanets = <Exoplanets>[];
+    final List<Exoplanet> availableExoplanets = _exoplanetsManager.exoplanets.value;
+    final List<Exoplanet> filteredExoplanets = <Exoplanet>[];
 
-    for (Exoplanets exoplanets in availableExoplanets) {
+    for (Exoplanet exoplanets in availableExoplanets) {
       if (exoplanets.name.contains(searchedText)) {
         filteredExoplanets.add(exoplanets);
       }

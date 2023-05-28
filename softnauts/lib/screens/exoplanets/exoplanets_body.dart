@@ -19,7 +19,7 @@ class ExoplanetsBody extends StatefulWidget {
 }
 
 class EexoplanetsBodyState extends State<ExoplanetsBody> {
-  late List<Exoplanets> _availableExoplanets = widget.state.exoplanetsList;
+  late List<Exoplanet> _availableExoplanets = widget.state.exoplanetsList;
   final ScrollController _scrollController = ScrollController();
 
   bool _gettingMoreItems = false;
@@ -74,7 +74,7 @@ class EexoplanetsBodyState extends State<ExoplanetsBody> {
   }
 
   Widget _exoplanetsCardBuilder(BuildContext _, int index) {
-    final Exoplanets exoplanets = _availableExoplanets[index];
+    final Exoplanet exoplanets = _availableExoplanets[index];
 
     return Card(
       child: Container(

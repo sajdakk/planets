@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:softnauts/screens/activities/activities_list/activities_list_screen.dart';
+import 'package:softnauts/screens/activity/activities_list/activities_list_screen.dart';
 import 'package:softnauts/screens/exoplanets/exoplanets_screen.dart';
 import 'package:softnauts/softnauts.dart';
 

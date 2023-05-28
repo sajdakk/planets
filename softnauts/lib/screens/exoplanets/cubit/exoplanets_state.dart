@@ -18,7 +18,7 @@ class ExoplanetsLoadedState extends ExoplanetsState {
     required this.exoplanetsList,
   });
 
-  final List<Exoplanets> exoplanetsList;
+  final List<Exoplanet> exoplanetsList;
 
   @override
   List<Object?> get props => <dynamic>[
