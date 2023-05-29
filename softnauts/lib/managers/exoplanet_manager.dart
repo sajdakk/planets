@@ -58,7 +58,7 @@ class ExoplanetsDataManager {
   }
 
   void _updateStream(List<Exoplanet> newData) {
-    final List<Exoplanet>? existingData = _exoplanets$.valueOrNull;
+    final List<Exoplanet>? existingData = _exoplanets$.valueOrNull?.toList();
     if (existingData == null) {
       return;
     }

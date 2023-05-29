@@ -1,20 +1,22 @@
 part of 'activities_cubit.dart';
 
-abstract class ActivitiesListState extends Equatable {
-  const ActivitiesListState();
+abstract class ActivitiesState extends Equatable {
+  const ActivitiesState();
 
   @override
   List<Object?> get props => <dynamic>[];
 }
 
-class ActivitiesListLoadingState extends ActivitiesListState {}
-
-class ActivitiesListNoDataState extends ActivitiesListState {
-  const ActivitiesListNoDataState();
+class ActivitiesLoadingState extends ActivitiesState {
+  const ActivitiesLoadingState();
 }
 
-class ActivitiesListLoadedState extends ActivitiesListState {
-  const ActivitiesListLoadedState({
+class ActivitiesNoDataState extends ActivitiesState {
+  const ActivitiesNoDataState();
+}
+
+class ActivitiesLoadedState extends ActivitiesState {
+  const ActivitiesLoadedState({
     required this.activitiesList,
     required this.favouritesIds,
   });

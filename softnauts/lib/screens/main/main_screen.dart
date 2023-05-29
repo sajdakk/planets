@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:softnauts/screens/activity/activities_list/activities_list_screen.dart';
+import 'package:softnauts/screens/activity/activities/activities_screen.dart';
 import 'package:softnauts/screens/exoplanets/exoplanets_screen.dart';
 import 'package:softnauts/softnauts.dart';
 
-class InitScreen extends StatefulWidget {
-  const InitScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<InitScreen> createState() => _InitScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _InitScreenState extends State<InitScreen> {
+class _MainScreenState extends State<MainScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -78,7 +78,7 @@ class _InitScreenState extends State<InitScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   ExoplanetsScreen(searchController: _searchController,),
-                  ActivitiesListScreen(searchController: _searchController,),
+                  ActivitiesScreen(searchController: _searchController,),
                 ],
               ),
             ),

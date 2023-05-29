@@ -6,7 +6,7 @@ part of 'activity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Activity _$ActivitiesFromJson(Map<String, dynamic> json) => Activity(
+Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
       id: json['id'] as int,
       creationDate: json['creation_date'] == null
           ? null
@@ -23,16 +23,19 @@ Activity _$ActivitiesFromJson(Map<String, dynamic> json) => Activity(
       observingSite: json['observing_site'] as String?,
       telescope: json['telescope'] as String?,
       instrument: json['instrument'] as String?,
-      programme: json['programme'] as String?,
+      programme: json['programme'] == null
+          ? null
+          : Programme.fromJson(json['programme'] as Map<String, dynamic>),
       programmeType: json['programme_type'] as String,
       targetName: json['target_name'] as String,
-      coordinates: json['coordinates'] as String?,
-      organisation: json['organisation'] as String,
+      coordinates: json['coordinates'] == null
+          ? null
+          : Coordinates.fromJson(json['coordinates'] as Map<String, dynamic>),
+      organisation: json['organisation'] as String?,
       collaboration: json['collaboration'] as String?,
     );
 
-Map<String, dynamic> _$ActivitiesToJson(Activity instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{
       'id': instance.id,
       'creation_date': instance.creationDate?.toIso8601String(),
       'date': instance.date?.toIso8601String(),

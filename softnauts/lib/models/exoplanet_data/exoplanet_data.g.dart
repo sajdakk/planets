@@ -6,7 +6,7 @@ part of 'exoplanet_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExoplanetData _$ExoplanetsDataFromJson(Map<String, dynamic> json) =>
+ExoplanetData _$ExoplanetDataFromJson(Map<String, dynamic> json) =>
     ExoplanetData(
       value: (json['value'] as num?)?.toDouble(),
       unit: json['unit'] as String?,
@@ -15,7 +15,7 @@ ExoplanetData _$ExoplanetsDataFromJson(Map<String, dynamic> json) =>
       bibcode: json['bibcode'] as String?,
     );
 
-Map<String, dynamic> _$ExoplanetsDataToJson(ExoplanetData instance) =>
+Map<String, dynamic> _$ExoplanetDataToJson(ExoplanetData instance) =>
     <String, dynamic>{
       'value': instance.value,
       'unit': instance.unit,

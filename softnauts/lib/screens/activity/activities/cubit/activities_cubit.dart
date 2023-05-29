@@ -8,8 +8,8 @@ import 'package:softnauts/softnauts.dart';
 
 part 'activities_state.dart';
 
-class ActivitiesListCubit extends Cubit<ActivitiesListState> {
-  ActivitiesListCubit() : super(ActivitiesListLoadingState());
+class ActivitiesCubit extends Cubit<ActivitiesState> {
+  ActivitiesCubit() : super(ActivitiesLoadingState());
 
   TextEditingController? _searchController;
 
@@ -52,7 +52,7 @@ class ActivitiesListCubit extends Cubit<ActivitiesListState> {
   void _filterData() {
     final String? searchedText = _searchController?.text;
     if (searchedText == null || searchedText.isEmpty) {
-      emit(ActivitiesListLoadedState(
+      emit(ActivitiesLoadedState(
         activitiesList: _activityManager.activities.value,
         favouritesIds: _favouritesActivitiesManager.favourites.value,
       ));
@@ -69,7 +69,7 @@ class ActivitiesListCubit extends Cubit<ActivitiesListState> {
       }
     }
 
-    emit(ActivitiesListLoadedState(
+    emit(ActivitiesLoadedState(
       activitiesList: filteredActivities,
       favouritesIds: _favouritesActivitiesManager.favourites.value,
     ));

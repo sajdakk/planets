@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:softnauts/models/programme/programme.dart';
 import 'package:softnauts/softnauts.dart';
 
 part 'activity.g.dart';
@@ -27,11 +28,11 @@ class Activity extends Equatable {
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) {
-    return _$ActivitiesFromJson(json);
+    return _$ActivityFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$ActivitiesToJson(this);
+    return _$ActivityToJson(this);
   }
 
   @JsonKey(name: ActivityFields.id)
@@ -68,7 +69,7 @@ class Activity extends Equatable {
   final String? instrument;
 
   @JsonKey(name: ActivityFields.programme)
-  final String? programme;
+  final Programme? programme;
 
   @JsonKey(name: ActivityFields.programmeType)
   final String programmeType;
@@ -77,10 +78,10 @@ class Activity extends Equatable {
   final String targetName;
 
   @JsonKey(name: ActivityFields.coordinates)
-  final String? coordinates;
+  final Coordinates? coordinates;
 
   @JsonKey(name: ActivityFields.organisation)
-  final String organisation;
+  final String? organisation;
 
   @JsonKey(name: ActivityFields.collaboration)
   final String? collaboration;

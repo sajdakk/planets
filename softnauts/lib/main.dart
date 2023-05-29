@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/screens/init/init_screen.dart';
+import 'package:softnauts/screens/main/main_screen.dart';
 
 void main() {
   setupAppLocator();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const InitScreen(),
+      home: const MainScreen(),
       builder: BotToastInit(),
     );
   }

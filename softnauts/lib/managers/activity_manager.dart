@@ -58,7 +58,7 @@ class ActivityManager {
   }
 
   void _updateStream(List<Activity> newData) {
-    final List<Activity>? existingData = _activities$.valueOrNull;
+    final List<Activity>? existingData = _activities$.valueOrNull?.toList();
     if (existingData == null) {
       return;
     }

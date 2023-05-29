@@ -15,11 +15,11 @@ class ExoplanetData extends Equatable {
   });
 
   factory ExoplanetData.fromJson(Map<String, dynamic> json) {
-    return _$ExoplanetsDataFromJson(json);
+    return _$ExoplanetDataFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$ExoplanetsDataToJson(this);
+    return _$ExoplanetDataToJson(this);
   }
 
   @JsonKey(name: ExoplanetDataFields.value)

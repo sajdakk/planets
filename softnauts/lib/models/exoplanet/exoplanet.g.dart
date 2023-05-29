@@ -6,9 +6,9 @@ part of 'exoplanet.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Exoplanet _$ExoplanetsFromJson(Map<String, dynamic> json) => Exoplanet(
+Exoplanet _$ExoplanetFromJson(Map<String, dynamic> json) => Exoplanet(
       name: json['name'] as String,
-      equatorialCoordinates: EquatorialCoordinates.fromJson(
+      equatorialCoordinates: Coordinates.fromJson(
           json['equatorial_coordinates'] as Map<String, dynamic>),
       mass: json['mass'] == null
           ? null
@@ -18,8 +18,7 @@ Exoplanet _$ExoplanetsFromJson(Map<String, dynamic> json) => Exoplanet(
           : ExoplanetData.fromJson(json['radius'] as Map<String, dynamic>),
       inclination: json['inclination'] == null
           ? null
-          : ExoplanetData.fromJson(
-              json['inclination'] as Map<String, dynamic>),
+          : ExoplanetData.fromJson(json['inclination'] as Map<String, dynamic>),
       semiMajorAxis: json['semi_major_axis'] == null
           ? null
           : ExoplanetData.fromJson(
@@ -34,8 +33,7 @@ Exoplanet _$ExoplanetsFromJson(Map<String, dynamic> json) => Exoplanet(
               json['eccentricity'] as Map<String, dynamic>),
       omegaAngle: json['omega_angle'] == null
           ? null
-          : ExoplanetData.fromJson(
-              json['omega_angle'] as Map<String, dynamic>),
+          : ExoplanetData.fromJson(json['omega_angle'] as Map<String, dynamic>),
       anomalyAngle: json['anomaly_angle'] == null
           ? null
           : ExoplanetData.fromJson(
@@ -102,8 +100,7 @@ Exoplanet _$ExoplanetsFromJson(Map<String, dynamic> json) => Exoplanet(
       parentStar: json['parent_star'] as String?,
     );
 
-Map<String, dynamic> _$ExoplanetsToJson(Exoplanet instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ExoplanetToJson(Exoplanet instance) => <String, dynamic>{
       'name': instance.name,
       'equatorial_coordinates': instance.equatorialCoordinates,
       'mass': instance.mass,

@@ -38,18 +38,18 @@ class Exoplanet extends Equatable {
   });
 
   factory Exoplanet.fromJson(Map<String, dynamic> json) {
-    return _$ExoplanetsFromJson(json);
+    return _$ExoplanetFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$ExoplanetsToJson(this);
+    return _$ExoplanetToJson(this);
   }
 
   @JsonKey(name: ExoplanetFields.name)
   final String name;
 
   @JsonKey(name: ExoplanetFields.equatorialCoordinates)
-  final EquatorialCoordinates equatorialCoordinates;
+  final Coordinates equatorialCoordinates;
 
   @JsonKey(name: ExoplanetFields.mass)
   final ExoplanetData? mass;

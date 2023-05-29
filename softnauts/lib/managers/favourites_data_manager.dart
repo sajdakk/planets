@@ -8,7 +8,7 @@ class FavouritesActivitiesManager {
   }
 
   void addActivity(int id) {
-    final Set<int>? currentValues = _favourites$.valueOrNull;
+    final Set<int>? currentValues = _favourites$.valueOrNull?.toSet();
     if (currentValues == null) {
       return;
     }
@@ -18,7 +18,7 @@ class FavouritesActivitiesManager {
   }
 
   void removeActivity(int id) {
-    final Set<int>? currentValues = _favourites$.valueOrNull;
+    final Set<int>? currentValues = _favourites$.valueOrNull?.toSet();
     if (currentValues == null) {
       return;
     }
