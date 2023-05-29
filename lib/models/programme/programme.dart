@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:softnauts/models/investigator/_investigator.dart';
-
-import '_programme.dart';
+import 'package:softnauts/softnauts.dart';
 
 part 'programme.g.dart';
 

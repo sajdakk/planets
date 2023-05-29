@@ -77,8 +77,12 @@ class _MainScreenState extends State<MainScreen> {
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  ExoplanetsScreen(searchController: _searchController,),
-                  ActivitiesScreen(searchController: _searchController,),
+                  ExoplanetsScreen(
+                    searchController: _searchController,
+                  ),
+                  ActivitiesScreen(
+                    searchController: _searchController,
+                  ),
                 ],
               ),
             ),

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:softnauts/models/programme/programme.dart';
 import 'package:softnauts/softnauts.dart';
 
 part 'activity.g.dart';
