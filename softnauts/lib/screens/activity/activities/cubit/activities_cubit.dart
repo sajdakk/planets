@@ -9,7 +9,7 @@ import 'package:softnauts/softnauts.dart';
 part 'activities_state.dart';
 
 class ActivitiesCubit extends Cubit<ActivitiesState> {
-  ActivitiesCubit() : super(ActivitiesLoadingState());
+  ActivitiesCubit() : super(const ActivitiesLoadingState());
 
   TextEditingController? _searchController;
 
@@ -50,6 +50,10 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
   }
 
   void _filterData() {
+    if (isClosed) {
+      return;
+    }
+
     final String? searchedText = _searchController?.text;
     if (searchedText == null || searchedText.isEmpty) {
       emit(ActivitiesLoadedState(

@@ -23,6 +23,10 @@ class ActivityDetailsCubit extends Cubit<ActivityDetailsState> {
 
   Future<void> init(int id) async {
     final Activity? activity = _activityManager.getWithId(id);
+    if (isClosed) {
+      return;
+    }
+
     if (activity == null) {
       emit(const ActivityDetailsNoDataState());
 
@@ -30,6 +34,10 @@ class ActivityDetailsCubit extends Cubit<ActivityDetailsState> {
     }
 
     _favouritesActivityManager.favourites.listen((Set<int> favouritesIds) {
+      if (isClosed) {
+        return;
+      }
+
       emit(
         ActivityDetailsLoadedState(
           activity: activity,

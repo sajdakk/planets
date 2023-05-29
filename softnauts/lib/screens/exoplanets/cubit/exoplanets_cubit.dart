@@ -41,6 +41,10 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
   }
 
   void _filterData() {
+    if (isClosed) {
+      return;
+    }
+
     final String? searchedText = _searchController?.text;
     if (searchedText == null || searchedText.isEmpty) {
       emit(ExoplanetsLoadedState(
