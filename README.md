@@ -1,4 +1,4 @@
-# softnauts
+# planets
 
 A new Flutter project.
 

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 class ActivityManager {
   ActivityManager({
@@ -19,6 +19,17 @@ class ActivityManager {
 
   ValueStream<List<Activity>> get activities {
     return _activities$;
+  }
+
+  Activity? getWithId(int id) {
+    final List<Activity>? currentValues = _activities$.valueOrNull;
+    if (currentValues == null) {
+      return null;
+    }
+
+    return currentValues.firstWhereOrNull(
+      (Activity activities) => activities.id == id,
+    );
   }
 
   Future<bool> fetchNextActivities() async {
@@ -77,16 +88,5 @@ class ActivityManager {
     }
 
     _activities$.add(existingData);
-  }
-
-  Activity? getWithId(int id) {
-    final List<Activity>? currentValues = _activities$.valueOrNull;
-    if (currentValues == null) {
-      return null;
-    }
-
-    return currentValues.firstWhereOrNull(
-      (Activity activities) => activities.id == id,
-    );
   }
 }

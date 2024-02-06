@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 part 'activities_state.dart';
 
@@ -16,7 +16,7 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
   StreamSubscription<dynamic>? _subscription;
 
   final ActivityManager _activityManager = sl();
-  final FavouritesActivitiesManager _favouritesActivitiesManager = sl();
+  final FavoritesActivitiesManager _favoritesActivitiesManager = sl();
 
   @override
   Future<void> close() {
@@ -35,10 +35,10 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
 
     _subscription = CombineLatestStream.combine2(
       _activityManager.activities,
-      _favouritesActivitiesManager.favourites,
+      _favoritesActivitiesManager.favorites,
       (
         List<Activity> activitiesList,
-        Set<int> favouritesIds,
+        Set<int> favoritesIds,
       ) {
         _filterData();
       },
@@ -54,11 +54,11 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
       return;
     }
 
-    final String? searchedText = _searchController?.text;
+    final String? searchedText = _searchController?.text.trim().toLowerCase();
     if (searchedText == null || searchedText.isEmpty) {
       emit(ActivitiesLoadedState(
         activitiesList: _activityManager.activities.value,
-        favouritesIds: _favouritesActivitiesManager.favourites.value,
+        favoritesIds: _favoritesActivitiesManager.favorites.value,
       ));
 
       return;
@@ -68,22 +68,24 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
     final List<Activity> filteredActivities = <Activity>[];
 
     for (Activity activities in availableActivities) {
-      if (activities.displayName.contains(searchedText)) {
+      String preparedName = activities.displayName.toLowerCase().trim();
+
+      if (preparedName.contains(searchedText)) {
         filteredActivities.add(activities);
       }
     }
 
     emit(ActivitiesLoadedState(
       activitiesList: filteredActivities,
-      favouritesIds: _favouritesActivitiesManager.favourites.value,
+      favoritesIds: _favoritesActivitiesManager.favorites.value,
     ));
   }
 
   void addActivities(int id) {
-    _favouritesActivitiesManager.addActivity(id);
+    _favoritesActivitiesManager.addActivity(id);
   }
 
   void removeActivities(int id) {
-    _favouritesActivitiesManager.removeActivity(id);
+    _favoritesActivitiesManager.removeActivity(id);
   }
 }

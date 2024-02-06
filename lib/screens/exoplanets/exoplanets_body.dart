@@ -1,8 +1,7 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 import 'cubit/exoplanets_cubit.dart';
 
@@ -15,10 +14,10 @@ class ExoplanetsBody extends StatefulWidget {
   final ExoplanetsLoadedState state;
 
   @override
-  State<ExoplanetsBody> createState() => EexoplanetsBodyState();
+  State<ExoplanetsBody> createState() => ExoplanetsBodyState();
 }
 
-class EexoplanetsBodyState extends State<ExoplanetsBody> {
+class ExoplanetsBodyState extends State<ExoplanetsBody> {
   late List<Exoplanet> _availableExoplanets = widget.state.exoplanetsList;
   final ScrollController _scrollController = ScrollController();
 
@@ -37,7 +36,15 @@ class EexoplanetsBodyState extends State<ExoplanetsBody> {
   void initState() {
     super.initState();
 
-    _scrollController.addListener(() => _onScroll(context));
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -45,68 +52,67 @@ class EexoplanetsBodyState extends State<ExoplanetsBody> {
     return NotificationListener<UserScrollNotification>(
       onNotification: (UserScrollNotification notification) {
         final ScrollDirection direction = notification.direction;
-        setState(() {
-          if (direction == ScrollDirection.reverse) {
-            _scrollDown = true;
-          } else if (direction == ScrollDirection.forward) {
-            _scrollDown = false;
-          }
-        });
+        if (direction == ScrollDirection.reverse) {
+          _scrollDown = true;
+        } else if (direction == ScrollDirection.forward) {
+          _scrollDown = false;
+        }
+
+        setState(() {});
+
         return true;
       },
-      child: _buildList(),
-    );
-  }
+      child: Stack(
+        children: [
+          ListView.builder(
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (BuildContext _, int index) {
+              final Exoplanet exoplanets = _availableExoplanets[index];
 
-  Widget _buildList() {
-    _availableExoplanets = widget.state.exoplanetsList.toList();
-
-    if (_availableExoplanets.isEmpty) {
-      return const SizedBox();
-    }
-
-    return ListView.builder(
-      controller: _scrollController,
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: _exoplanetsCardBuilder,
-      itemCount: _availableExoplanets.length,
-    );
-  }
-
-  Widget _exoplanetsCardBuilder(BuildContext _, int index) {
-    final Exoplanet exoplanets = _availableExoplanets[index];
-
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          exoplanets.name,
-          style: SnTextStyles.dMSansSmall14.copyWith(
-            color: SnColors.textColor,
+              return Card(
+                child: Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    exoplanets.displayName,
+                    style: MyTextStyles.dMSansSmall14.copyWith(
+                      color: MyColors.textColor,
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: _availableExoplanets.length,
           ),
-        ),
+          Positioned.fill(
+            child: SafeArea(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Visibility(
+                    visible: _gettingMoreItems,
+                    child: const CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Future<void> _onScroll(BuildContext context) async {
+  Future<void> _onScroll() async {
     final double maxScroll = _scrollController.position.maxScrollExtent;
     final double currentScroll = _scrollController.position.pixels;
-
-    if (maxScroll - currentScroll == 0 && !_gettingMoreItems && _scrollDown) {
-      BotToast.showLoading(backgroundColor: Colors.transparent);
-      _gettingMoreItems = true;
-      final ExoplanetsCubit cubit = context.read();
-
-      await Future.wait<void>(
-        <Future<void>>[
-          cubit.getMoreExoplanets(),
-          Future<dynamic>.delayed(const Duration(milliseconds: 50), () {}),
-        ],
-      );
-
-      BotToast.closeAllLoading();
-      _gettingMoreItems = false;
+    if (maxScroll - currentScroll != 0 || _gettingMoreItems || !_scrollDown) {
+      return;
     }
+
+    _gettingMoreItems = true;
+    final ExoplanetsCubit cubit = context.read();
+    await cubit.getMoreExoplanets();
+    _gettingMoreItems = false;
   }
 }

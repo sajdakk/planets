@@ -1,2 +1,2 @@
-export 'sn_colors.dart';
-export 'sn_text_styles.dart';
+export 'my_colors.dart';
+export 'my_text_styles.dart';

@@ -1,11 +1,10 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/screens/activity/activity_details/activity_details_screen.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 import 'cubit/activities_cubit.dart';
+import 'widgets/_widgets.dart';
 
 class ActivitiesBody extends StatefulWidget {
   const ActivitiesBody({
@@ -16,10 +15,10 @@ class ActivitiesBody extends StatefulWidget {
   final ActivitiesLoadedState state;
 
   @override
-  State<ActivitiesBody> createState() => AactivitiesBodyState();
+  State<ActivitiesBody> createState() => ActivitiesBodyState();
 }
 
-class AactivitiesBodyState extends State<ActivitiesBody> {
+class ActivitiesBodyState extends State<ActivitiesBody> {
   final ScrollController _scrollController = ScrollController();
 
   bool _gettingMoreProducts = false;
@@ -29,7 +28,15 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
   void initState() {
     super.initState();
 
-    _scrollController.addListener(() => _onScroll(context));
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -46,69 +53,48 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
         });
         return true;
       },
-      child: ListView.separated(
-        controller: _scrollController,
-        physics: const AlwaysScrollableScrollPhysics(),
-        itemBuilder: (BuildContext _, int index) => _activitiesCardBuilder(index, context),
-        itemCount: widget.state.activitiesList.length,
-        separatorBuilder: (BuildContext _, int __) => const Divider(
-          color: Colors.deepPurple,
-          height: 1.0,
-        ),
-      ),
-    );
-  }
-
-  Widget _activitiesCardBuilder(int index, BuildContext context) {
-    final Activity activities = widget.state.activitiesList[index];
-
-    return InkWell(
-      key: ValueKey<String>('${activities.id}+ ${widget.state.favouritesIds.contains(activities.id)}'),
-      highlightColor: Colors.transparent,
-      splashColor: Colors.purple.withOpacity(0.2),
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => ActivityDetailsScreen(
-            id: activities.id,
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              onPressed: () => _onHeartPress(context, activities.id),
-              icon: widget.state.favouritesIds.contains(activities.id)
-                  ? const Icon(
-                      Icons.favorite_rounded,
-                      color: Colors.purple,
-                    )
-                  : const Icon(
-                      Icons.favorite_outline_rounded,
-                      color: SnColors.textColor,
-                    ),
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (BuildContext _, int index) {
+              final Activity activity = widget.state.activitiesList[index];
+              return ActivityRow(
+                activity: activity,
+                favoritesIds: widget.state.favoritesIds,
+                onHeartPressed: _onHeartPressed,
+              );
+            },
+            itemCount: widget.state.activitiesList.length,
+            separatorBuilder: (BuildContext _, int __) => const Divider(
+              color: Colors.deepPurple,
+              height: 1.0,
             ),
-            Expanded(
-              child: Text(
-                activities.displayName,
-                overflow: TextOverflow.ellipsis,
-                style: SnTextStyles.dMSansSmall14.copyWith(
-                  color: SnColors.textColor,
+          ),
+          Positioned.fill(
+            child: SafeArea(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Visibility(
+                    visible: _gettingMoreProducts,
+                    child: const CircularProgressIndicator(),
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  void _onHeartPress(BuildContext context, int id) {
+  void _onHeartPressed(int id) {
     final ActivitiesCubit cubit = context.read();
 
-    if (widget.state.favouritesIds.contains(id)) {
+    if (widget.state.favoritesIds.contains(id)) {
       cubit.removeActivities(id);
 
       return;
@@ -117,24 +103,16 @@ class AactivitiesBodyState extends State<ActivitiesBody> {
     cubit.addActivities(id);
   }
 
-  Future<void> _onScroll(BuildContext context) async {
+  Future<void> _onScroll() async {
     final double maxScroll = _scrollController.position.maxScrollExtent;
     final double currentScroll = _scrollController.position.pixels;
-
-    if (maxScroll - currentScroll == 0 && !_gettingMoreProducts && _scrollDown) {
-      BotToast.showLoading(backgroundColor: Colors.transparent);
-      _gettingMoreProducts = true;
-      final ActivitiesCubit cubit = context.read();
-
-      await Future.wait<void>(
-        <Future<void>>[
-          cubit.getMoreActivities(),
-          Future<dynamic>.delayed(const Duration(milliseconds: 50), () {}),
-        ],
-      );
-
-      BotToast.closeAllLoading();
-      _gettingMoreProducts = false;
+    if (maxScroll - currentScroll != 0 || _gettingMoreProducts || !_scrollDown) {
+      return;
     }
+
+    _gettingMoreProducts = true;
+    final ActivitiesCubit cubit = context.read();
+    await cubit.getMoreActivities();
+    _gettingMoreProducts = false;
   }
 }

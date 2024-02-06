@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 class DetailsRow extends StatelessWidget {
   const DetailsRow({
@@ -15,8 +15,8 @@ class DetailsRow extends StatelessWidget {
       children: <Widget>[
         Text(
           text,
-          style: SnTextStyles.dMSansSmall14.copyWith(
-            color: SnColors.textColor,
+          style: MyTextStyles.dMSansSmall14.copyWith(
+            color: MyColors.textColor,
           ),
         ),
         const SizedBox(height: 16.0),

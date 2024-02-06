@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 part 'exoplanets_state.dart';
 
@@ -31,9 +31,11 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
 
     await _exoplanetsManager.fetchNextExoplanets();
 
-    _subscription = _exoplanetsManager.exoplanets.listen((List<Exoplanet> exoplanetsList) {
-      _filterData();
-    });
+    _subscription = _exoplanetsManager.exoplanets.listen(
+      (List<Exoplanet> exoplanetsList) {
+        _filterData();
+      },
+    );
   }
 
   Future<void> getMoreExoplanets() async {
@@ -45,7 +47,7 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
       return;
     }
 
-    final String? searchedText = _searchController?.text;
+    final String? searchedText = _searchController?.text.trim().toLowerCase();
     if (searchedText == null || searchedText.isEmpty) {
       emit(ExoplanetsLoadedState(
         exoplanetsList: _exoplanetsManager.exoplanets.value,
@@ -58,7 +60,9 @@ class ExoplanetsCubit extends Cubit<ExoplanetsState> {
     final List<Exoplanet> filteredExoplanets = <Exoplanet>[];
 
     for (Exoplanet exoplanets in availableExoplanets) {
-      if (exoplanets.name.contains(searchedText)) {
+      String preparedName = exoplanets.displayName.toLowerCase().trim();
+
+      if (preparedName.contains(searchedText)) {
         filteredExoplanets.add(exoplanets);
       }
     }

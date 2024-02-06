@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class SnTextStyles {
+abstract class MyTextStyles {
   static const TextStyle _dMSans = TextStyle(
     fontFamily: 'DMSans',
   );

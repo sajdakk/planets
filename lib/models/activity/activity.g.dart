@@ -26,7 +26,7 @@ Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
       programme: json['programme'] == null
           ? null
           : Programme.fromJson(json['programme'] as Map<String, dynamic>),
-      programmeType: json['programme_type'] as String,
+      programmeType: json['programme_type'] as String?,
       targetName: json['target_name'] as String,
       coordinates: json['coordinates'] == null
           ? null

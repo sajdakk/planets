@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 part 'exoplanet.g.dart';
 
@@ -128,6 +128,8 @@ class Exoplanet extends Equatable {
 
   @JsonKey(name: ExoplanetFields.parentStar)
   final String? parentStar;
+
+  String get displayName => name;
 
   @override
   List<Object?> get props => <Object?>[

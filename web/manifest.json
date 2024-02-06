@@ -1,6 +1,6 @@
 {
-    "name": "softnauts",
-    "short_name": "softnauts",
+    "name": "planets",
+    "short_name": "planets",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

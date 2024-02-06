@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
-class SnTextInput extends StatelessWidget {
-  const SnTextInput({
+class MyTextInput extends StatelessWidget {
+  const MyTextInput({
     super.key,
     this.labelText,
     this.controller,
@@ -14,9 +14,9 @@ class SnTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: SnTextStyles.dMSansRegular16.copyWith(
+      style: MyTextStyles.dMSansRegular16.copyWith(
         fontWeight: FontWeight.w400,
-        color: SnColors.textColor,
+        color: MyColors.textColor,
       ),
       controller: controller,
       keyboardType: TextInputType.text,
@@ -27,24 +27,24 @@ class SnTextInput extends StatelessWidget {
           left: 12.0,
           right: 12.0,
         ),
-        focusColor: SnColors.neutral,
+        focusColor: MyColors.neutral,
         filled: true,
         fillColor: Colors.white,
         labelText: labelText,
-        labelStyle: SnTextStyles.dMSansSmall14.copyWith(
-          color: SnColors.textColor,
+        labelStyle: MyTextStyles.dMSansSmall14.copyWith(
+          color: MyColors.textColor,
           fontSize: 16.0,
           height: 20.0 / 16.0,
         ),
-        floatingLabelStyle: SnTextStyles.dMSansSmall14.copyWith(
-          color: SnColors.gray,
+        floatingLabelStyle: MyTextStyles.dMSansSmall14.copyWith(
+          color: MyColors.gray,
         ),
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(6.0),
           ),
           borderSide: BorderSide(
-            color: SnColors.neutral,
+            color: MyColors.neutral,
           ),
         ),
         focusedBorder: const OutlineInputBorder(
@@ -52,7 +52,7 @@ class SnTextInput extends StatelessWidget {
             Radius.circular(6.0),
           ),
           borderSide: BorderSide(
-            color: SnColors.neutral,
+            color: MyColors.neutral,
             width: 2.0,
           ),
         ),
@@ -61,7 +61,7 @@ class SnTextInput extends StatelessWidget {
             Radius.circular(6.0),
           ),
           borderSide: BorderSide(
-            color: SnColors.neutral,
+            color: MyColors.neutral,
           ),
         ),
       ),

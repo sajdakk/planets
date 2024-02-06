@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 part 'activity_details_state.dart';
 
@@ -10,7 +10,7 @@ class ActivityDetailsCubit extends Cubit<ActivityDetailsState> {
   ActivityDetailsCubit() : super(ActivityDetailsLoadingState());
 
   final ActivityManager _activityManager = sl();
-  final FavouritesActivitiesManager _favouritesActivityManager = sl();
+  final FavoritesActivitiesManager _favoritesActivityManager = sl();
 
   StreamSubscription<dynamic>? _subscription;
 
@@ -33,25 +33,27 @@ class ActivityDetailsCubit extends Cubit<ActivityDetailsState> {
       return;
     }
 
-    _favouritesActivityManager.favourites.listen((Set<int> favouritesIds) {
-      if (isClosed) {
-        return;
-      }
+    _subscription = _favoritesActivityManager.favorites.listen(
+      (Set<int> favoritesIds) {
+        if (isClosed) {
+          return;
+        }
 
-      emit(
-        ActivityDetailsLoadedState(
-          activity: activity,
-          isActivityInFavourites: _favouritesActivityManager.isActivityInFavourites(activity.id),
-        ),
-      );
-    });
+        emit(
+          ActivityDetailsLoadedState(
+            activity: activity,
+            isActivityInFavorites: _favoritesActivityManager.isActivityInFavorites(activity.id),
+          ),
+        );
+      },
+    );
   }
 
   void addActivity(int id) {
-    _favouritesActivityManager.addActivity(id);
+    _favoritesActivityManager.addActivity(id);
   }
 
   void removeActivity(int id) {
-    _favouritesActivityManager.removeActivity(id);
+    _favoritesActivityManager.removeActivity(id);
   }
 }

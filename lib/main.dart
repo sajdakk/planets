@@ -1,7 +1,6 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:softnauts/core/_core.dart';
-import 'package:softnauts/screens/main/main_screen.dart';
+import 'package:planets/core/_core.dart';
+import 'package:planets/screens/main/main_screen.dart';
 
 void main() {
   setupAppLocator();
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Softnauts',
+      title: 'Planets',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
@@ -24,7 +23,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MainScreen(),
-      builder: BotToastInit(),
+      builder: (BuildContext context, Widget? child) {
+        return child ?? const SizedBox();
+      },
     );
   }
 }

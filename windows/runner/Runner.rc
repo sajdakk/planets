@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "softnauts" "\0"
+            VALUE "FileDescription", "planets" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "softnauts" "\0"
+            VALUE "InternalName", "planets" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "softnauts.exe" "\0"
-            VALUE "ProductName", "softnauts" "\0"
+            VALUE "OriginalFilename", "planets.exe" "\0"
+            VALUE "ProductName", "planets" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

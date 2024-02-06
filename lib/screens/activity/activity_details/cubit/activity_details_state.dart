@@ -1,6 +1,6 @@
 part of 'activity_details_cubit.dart';
 
-abstract class ActivityDetailsState extends Equatable {
+sealed class ActivityDetailsState extends Equatable {
   const ActivityDetailsState();
 
   @override
@@ -16,15 +16,15 @@ class ActivityDetailsNoDataState extends ActivityDetailsState {
 class ActivityDetailsLoadedState extends ActivityDetailsState {
   const ActivityDetailsLoadedState({
     required this.activity,
-    required this.isActivityInFavourites,
+    required this.isActivityInFavorites,
   });
 
   final Activity activity;
-  final bool isActivityInFavourites;
+  final bool isActivityInFavorites;
 
   @override
   List<Object?> get props => <dynamic>[
         activity,
-        isActivityInFavourites,
+        isActivityInFavorites,
       ];
 }

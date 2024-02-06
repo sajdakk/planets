@@ -1,6 +1,6 @@
 part of 'exoplanets_cubit.dart';
 
-abstract class ExoplanetsState extends Equatable {
+sealed class ExoplanetsState extends Equatable {
   const ExoplanetsState();
 
   @override
@@ -8,10 +8,6 @@ abstract class ExoplanetsState extends Equatable {
 }
 
 class ExoplanetsLoadingState extends ExoplanetsState {}
-
-class ExoplanetsNoDataState extends ExoplanetsState {
-  const ExoplanetsNoDataState();
-}
 
 class ExoplanetsLoadedState extends ExoplanetsState {
   const ExoplanetsLoadedState({

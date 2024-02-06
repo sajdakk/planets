@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 import 'activity_details_body.dart';
 import 'cubit/activity_details_cubit.dart';
@@ -16,62 +16,67 @@ class ActivityDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ActivityDetailsCubit>(
-      create: (_) => sl()..init(id),
+      create: (_) => ActivityDetailsCubit()..init(id),
       child: BlocBuilder<ActivityDetailsCubit, ActivityDetailsState>(
         builder: (BuildContext context, ActivityDetailsState state) {
-          if (state is ActivityDetailsLoadedState) {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'activity details',
-                      style: SnTextStyles.dMSansLarge24.copyWith(
-                        color: SnColors.basicBlack,
+          switch (state) {
+            case ActivityDetailsLoadingState():
+              return const LoadingView();
+
+            case ActivityDetailsNoDataState():
+              return const NoDataView();
+
+            case ActivityDetailsLoadedState():
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'activity details',
+                        style: MyTextStyles.dMSansLarge24.copyWith(
+                          color: MyColors.basicBlack,
+                        ),
                       ),
-                    ),
-                    IconButton(
+                      IconButton(
+                        onPressed: () {
+                          final ActivityDetailsCubit cubit = context.read();
+
+                          if (state.isActivityInFavorites) {
+                            cubit.removeActivity(state.activity.id);
+
+                            return;
+                          }
+
+                          cubit.addActivity(state.activity.id);
+                        },
+                        icon: state.isActivityInFavorites
+                            ? const Icon(
+                                Icons.favorite_rounded,
+                                color: Colors.purple,
+                              )
+                            : const Icon(
+                                Icons.favorite_outline_rounded,
+                                color: MyColors.basicBlack,
+                              ),
+                      ),
+                    ],
+                  ),
+                  leading: GestureDetector(
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                      ),
                       onPressed: () {
-                        final ActivityDetailsCubit cubit = context.read();
-
-                        if (state.isActivityInFavourites) {
-                          cubit.removeActivity(state.activity.id);
-
-                          return;
-                        }
-
-                        cubit.addActivity(state.activity.id);
+                        Navigator.pop(context);
                       },
-                      icon: state.isActivityInFavourites
-                          ? const Icon(
-                              Icons.favorite_rounded,
-                              color: Colors.purple,
-                            )
-                          : const Icon(
-                              Icons.favorite_outline_rounded,
-                              color: SnColors.basicBlack,
-                            ),
                     ),
-                  ],
-                ),
-                leading: GestureDetector(
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
-              ),
-              body: ActivityBody(state: state),
-            );
+                body: ActivityBody(state: state),
+              );
           }
-
-          return const ErrorView();
         },
       ),
     );

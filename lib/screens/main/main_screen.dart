@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:softnauts/screens/activity/activities/activities_screen.dart';
-import 'package:softnauts/screens/exoplanets/exoplanets_screen.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/screens/activity/activities/activities_screen.dart';
+import 'package:planets/screens/exoplanets/exoplanets_screen.dart';
+import 'package:planets/planets.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -26,9 +26,9 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
-          'Softnauts',
-          style: SnTextStyles.dMSansLarge24.copyWith(
-            color: SnColors.basicBlack,
+          'Planets',
+          style: MyTextStyles.dMSansLarge24.copyWith(
+            color: MyColors.basicBlack,
           ),
         ),
       ),
@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(height: 16.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: SnTextInput(
+              child: MyTextInput(
                 controller: _searchController,
                 labelText: 'Search',
               ),
@@ -55,8 +55,8 @@ class _MainScreenState extends State<MainScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'exoplanets',
-                    style: SnTextStyles.dMSansSmall14.copyWith(
-                      color: SnColors.gray,
+                    style: MyTextStyles.dMSansSmall14.copyWith(
+                      color: MyColors.gray,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -65,8 +65,8 @@ class _MainScreenState extends State<MainScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'activities',
-                    style: SnTextStyles.dMSansSmall14.copyWith(
-                      color: SnColors.gray,
+                    style: MyTextStyles.dMSansSmall14.copyWith(
+                      color: MyColors.gray,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

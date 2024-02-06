@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 class ExoplanetsDataManager {
   ExoplanetsDataManager({

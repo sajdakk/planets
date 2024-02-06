@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:softnauts/softnauts.dart';
+import 'package:planets/planets.dart';
 
 part 'activity.g.dart';
 
@@ -71,7 +71,7 @@ class Activity extends Equatable {
   final Programme? programme;
 
   @JsonKey(name: ActivityFields.programmeType)
-  final String programmeType;
+  final String? programmeType;
 
   @JsonKey(name: ActivityFields.targetName)
   final String targetName;
@@ -88,20 +88,16 @@ class Activity extends Equatable {
   String get displayName {
     String name = '';
 
-    if (targetName.isNotEmpty) {
-      name += '$targetName, ';
+    name += '$id, ';
+
+    if (title.isNotEmpty) {
+      name += '$title, ';
     } else {
       name += '<empty>, ';
     }
 
     if (creationDate != null) {
-      name += '${creationDate!.readable()}, ';
-    } else {
-      name += '<empty>, ';
-    }
-
-    if (date != null) {
-      name += date!.readable();
+      name += creationDate!.readable();
     } else {
       name += '<empty>';
     }
